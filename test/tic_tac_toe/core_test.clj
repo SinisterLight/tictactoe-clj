@@ -57,3 +57,11 @@
 (deftest should-return-true-for-a-transposed-diagonal-winner
   (let [board [["O" "." "X"] ["." "X" "."] ["X" "." "O"]]]
     (is (true? (winner? board cross)))))
+
+(deftest should-return-true-when-moves-left
+  (let [board [["O" "X" "X"] ["X" "X" "X"] ["X" "." "O"]]]
+    (is (true? (moves-left? board)))))
+
+(deftest should-return-false-when-no-moves-left
+  (let [board [["O" "X" "X"] ["X" "X" "X"] ["X" "O" "O"]]]
+    (is (false? (moves-left? board)))))

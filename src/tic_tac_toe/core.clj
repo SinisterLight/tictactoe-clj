@@ -37,5 +37,7 @@
 (defn winner? [board mark]
   (or (row-winner? board mark)
       (row-winner? (matrix/transpose board) mark)
-      (diagonal-winner? board mark)
-      (diagonal-winner? (matrix/transpose board) mark)))
+      (diagonal-winner? board mark)))
+
+(defn moves-left? [board]
+  (true? (some #(= empty-square %) (flatten board))))
