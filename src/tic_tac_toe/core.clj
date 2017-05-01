@@ -27,4 +27,11 @@
   {:pre [(unmarked? board [x y])]}
   (assoc board y (assoc (get board y) x mark)))
 
-(defn winner? [board mark] true)
+(defn row-winner? [board mark]
+  (= true (some true? (map #(every? #{mark} %) board))))
+
+(defn transpose [board]
+  (apply mapv vector board))
+
+(defn winner? [board mark]
+  (or (row-winner? board mark) (row-winner? (transpose board) mark)))

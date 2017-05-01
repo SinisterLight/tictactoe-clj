@@ -33,6 +33,18 @@
   (let [board (mark-board empty-board cross [0 0])]
     (is (thrown? AssertionError (mark-board board cross [0 0])))))
 
-(deftest should-return-true
+(deftest should-return-true-for-a-row-winner
   (let [board [["X" "X" "X"] ["." "." "."] ["." "." "."]]]
-    (is (winner? board cross))))
+    (is (true? (winner? board cross)))))
+
+(deftest should-return-false-for-no-winner
+  (let [board [["X" "X" "O"] ["." "." "."] ["." "." "."]]]
+    (is (false? (winner? board cross)))))
+
+(deftest should-return-true-for-a-column-winner
+  (let [board [["X" "." "O"] ["X" "." "."] ["X" "." "."]]]
+    (is (true? (winner? board cross)))))
+
+(deftest should-return-transpose-of-board
+  (let [board [["X" "." "O"] ["X" "." "."] ["X" "." "."]]]
+    (is (= [["X" "X" "X"] ["." "." "."] ["O" "." "."]] (transpose board)))))
