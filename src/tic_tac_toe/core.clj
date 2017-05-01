@@ -1,4 +1,5 @@
 (ns tic-tac-toe.core
+  (:require [tic-tac-toe.matrix :as matrix])
   (:gen-class))
 
 (def empty-board
@@ -27,11 +28,14 @@
   {:pre [(unmarked? board [x y])]}
   (assoc board y (assoc (get board y) x mark)))
 
+(defn diagonal-winner? [board mark]
+  (= true (some true? (map #(every? #{mark} %) (matrix/diagonals board)))))
+
 (defn row-winner? [board mark]
   (= true (some true? (map #(every? #{mark} %) board))))
 
-(defn transpose [board]
-  (apply mapv vector board))
-
 (defn winner? [board mark]
-  (or (row-winner? board mark) (row-winner? (transpose board) mark)))
+  (or (row-winner? board mark)
+      (row-winner? (matrix/transpose board) mark)
+      (diagonal-winner? board mark)
+      (diagonal-winner? (matrix/transpose board) mark)))

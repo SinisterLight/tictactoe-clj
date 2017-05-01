@@ -1,5 +1,6 @@
 (ns tic-tac-toe.core-test
   (:require [clojure.test :refer :all]
+            [tic-tac-toe.matrix :as matrix]
             [tic-tac-toe.core :refer :all]))
 
 (deftest define-empty-board
@@ -47,4 +48,12 @@
 
 (deftest should-return-transpose-of-board
   (let [board [["X" "." "O"] ["X" "." "."] ["X" "." "."]]]
-    (is (= [["X" "X" "X"] ["." "." "."] ["O" "." "."]] (transpose board)))))
+    (is (= [["X" "X" "X"] ["." "." "."] ["O" "." "."]] (matrix/transpose board)))))
+
+(deftest should-return-true-for-a-diagonal-winner
+  (let [board [["X" "." "O"] ["." "X" "."] ["X" "." "X"]]]
+    (is (true? (winner? board cross)))))
+
+(deftest should-return-true-for-a-transposed-diagonal-winner
+  (let [board [["O" "." "X"] ["." "X" "."] ["X" "." "O"]]]
+    (is (true? (winner? board cross)))))
